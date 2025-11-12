@@ -1,0 +1,132 @@
+# 🚀 API Transaction Manager
+
+Simulate reliable API interactions with retry logic, idempotency enforcement, transaction logging, and failure recovery.
+
+**Author:** Andre Wright  
+**Version:** 1.0  
+**Date:** November 7, 2025
+
+---
+
+## 📘 Overview
+
+The API Transaction Manager is a FastAPI-based simulation tool for developers and architects to test fault-tolerant API patterns. It supports:
+
+- ✅ Retry logic with exponential backoff  
+- ✅ Idempotency enforcement  
+- ✅ Transaction logging  
+- ✅ Failure simulation  
+- ✅ Status querying via RESTful endpoints
+
+---
+
+## 🧰 Features
+
+| Feature              | Description                                           |
+|----------------------|-------------------------------------------------------|
+| `/submit`            | Accepts transaction requests with payload + key       |
+| Retry Logic          | Retries failed API calls with exponential backoff     |
+| Idempotency          | Prevents duplicate processing using unique keys       |
+| Logging              | Stores transaction metadata in SQLite                 |
+| `/status/{key}`      | Retrieves transaction result by idempotency key       |
+| Swagger UI           | Interactive API docs at `/docs`                       |
+
+---
+
+## 🗃️ Tech Stack
+
+- **Language:** Python 3.10+  
+- **Framework:** FastAPI  
+- **Database:** SQLite (via SQLAlchemy)  
+- **HTTP Client:** httpx  
+- **Testing:** pytest  
+- **Optional:** Docker
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/your-username/api-transaction-manager.git
+cd api-transaction-manager
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+---
+
+## 🗃️ Database Setup
+
+```bash
+python -c "from app.db_init import init_db; init_db()"
+```
+
+---
+
+## 🚦 Run the Server
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Access:
+- Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
+- Status endpoint: [http://localhost:8000/status/{key}](http://localhost:8000/status/{key})
+
+---
+
+## 🧪 Run Tests
+
+```bash
+pytest tests/
+```
+
+---
+
+## 🐳 Docker Deployment
+
+```bash
+docker build -t transaction-manager .
+docker run -p 8000:8000 transaction-manager
+```
+
+---
+
+## 📜 API Endpoints
+
+### `POST /submit`
+Submit a transaction:
+```json
+{
+  "idempotency_key": "abc123",
+  "payload": {
+    "amount": 100
+  }
+}
+```
+
+### `GET /status/{key}`
+Query transaction status by key.
+
+---
+
+## ✅ Acceptance Criteria
+
+| Criteria              | Description                                      |
+|-----------------------|--------------------------------------------------|
+| Retry logic works     | Retries failed calls with backoff                |
+| Idempotency enforced  | Duplicate keys are rejected                      |
+| Logs are complete     | Metadata stored for each transaction             |
+| Failure simulation    | Configurable failure rate                        |
+| Status endpoint       | Returns correct transaction result               |
+
+---
+
+## 📌 License
+
+MIT License — free to use, modify, and distribute.
+
+---
+
+Would you like help customizing this for GitHub formatting or adding badges (build status, license, etc)? I can also help you write a changelog or contribution guide if you're planning to open-source it.
